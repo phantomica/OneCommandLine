@@ -24,6 +24,7 @@
         "electron": "^21.2.0"
     },
     "dependencies": {
-        "brightness": "^3.0.0"
+        "brightness": "^3.0.0",
+        "find-process": "^1.4.7"
     }
 }

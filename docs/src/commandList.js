@@ -1,5 +1,5 @@
-const commandList = [];
+const OCLcommands = require('./commands/OCLcommands');
 
-const quit = () => {
-    ipc.send('quit');
-}
+const commandList = [OCLcommands.quit, OCLcommands.exit];
+
+console.log(commandList);
