@@ -4,5 +4,5 @@ const ipc = require('electron').ipcRenderer; // sender
 window.addEventListener('keypress', (event) => {
     if (event.key != 'Enter') { return }
     ipc.send('command-submit');
-    commandHandler(getCommand('commandInput'));
+    commandHandler(getCommand('commandInput')) ? clearInput(commandInput) : console.error('Not a command');
 })

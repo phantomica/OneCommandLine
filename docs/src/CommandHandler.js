@@ -9,4 +9,23 @@ const getCommand = (elementId) => {
     return command
 }
 
-const commandHandler = (command) => {}
+const clearInput = (elementId) => {
+    const element = document.getElementById(elementId);
+    element.value = "";
+}
+
+// const markInput = (elementId) => {
+//     const element = document.getElementById(elementId);
+//     element.
+// }
+
+const commandHandler = (command) => {
+    let commandExecuted = false;
+    for (i in commandList) {
+        if (commandList[i].name === command) {
+            commandList[i]();
+            return commandExecuted = true;
+        }
+    }
+    return commandExecuted;
+}
