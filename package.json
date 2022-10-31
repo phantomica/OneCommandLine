@@ -1,0 +1,29 @@
+{
+    "name": "onecommandline",
+    "version": "0.0.1",
+    "description": "A simple command line.<br> \r Press one <code>customizable</code> button to open up a small one line window that supports simple commands:<br>\r - <code>br [value]</code> - set the brightness of your monitor\r - <code>settings</code> - opens up the settings menu",
+    "main": "main.js",
+    "directories": {
+        "doc": "docs"
+    },
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "electron ."
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/phantomica/OneCommandLine.git"
+    },
+    "author": "phantomica",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/phantomica/OneCommandLine/issues"
+    },
+    "homepage": "https://github.com/phantomica/OneCommandLine#readme",
+    "devDependencies": {
+        "electron": "^21.2.0"
+    },
+    "dependencies": {
+        "brightness": "^3.0.0"
+    }
+}
