@@ -51,7 +51,7 @@ const commandHandler = (input) => {
     let command = splitCommand(input);
 
     for (i in commandList) {
-        if (commandList[i].func.name !== command.name) { continue }
+        if (!commandList[i].funcNames.includes(command.name)) { continue }
         if (commandList[i].funcProperties) { commandList[i].func(command.value, command.properties); return commandExecuted = true; }
         if (commandList[i].funcParam) { commandList[i].func(command.value); return commandExecuted = true; }
         commandList[i].func();

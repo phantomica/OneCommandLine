@@ -13,10 +13,4 @@ const killProcess = (processName) => {
     });
 }
 
-/**
- * Sends exit signal to given process.
- * @param {string} processName name of an active process
- */
-const exitProcess = killProcess;
-
-module.exports = { killProcess, exitProcess }
+module.exports = { killProcess }
