@@ -7,7 +7,8 @@ Press one <code>customizable</code> button to open up a small one line window th
 Custom commands can also be added:<br>
 1. create own .js file<br>
 2. create an object by the following template:<br>
-```const obj = {
+```
+const obj = {
     func: yourFunction, // the function that executes when you call the command
     funcNames: ['commandName', 'alternativeCommandName'], // <b>COMMAND IS ONLY ONE WORD</b>, all commands that will call the function<br>
     funcParam: boolean, // set true if your function has 1 single line parameter, else false<br>
