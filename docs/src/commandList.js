@@ -1,29 +1,23 @@
-const { quit } = require('./src/commands/OCLcommands.js');
-const { killProcess } = require('./src/commands/processControls.js');
-const { setBrightness } = require('./src/commands/brightnessControls.js');
+const fs = require('fs');
+const path = require('path');
+/*
+ 0 => directory path for fs
+ 1 => directory path for require
+*/
+const commandsDir = ['./docs/src/commands/', './src/commands/'];
+const loadedModules = [];
+const commandList = [];
 
-const commandList = []
-
-//* OCLcommands
-commandList.push({
-    func: quit,
-    funcNames: ['quit', 'exit'],
-    funcParam: false,
-    funcProperties: false,
-})
-
-//* processControls
-commandList.push({
-    func: killProcess,
-    funcNames: ['killProcess', 'exitProcess', 'killPr', 'exitPr'],
-    funcParam: true,
-    funcProperties: false,
-})
-
-//* brightnessControls
-commandList.push({
-    func: setBrightness,
-    funcNames: ['setBrightness', 'brightness', 'br'],
-    funcParam: true,
-    funcProperties: false,
+/*
+import all modules from commands folder
+=> modules are stored in loadedModules
+=> objects from loadedModules are stored in commandList
+*/
+fs.readdir(commandsDir[0], (err, files) => {
+    for (let i = 0; i < files.length; i++) {
+        loadedModules.push(require(path.join(__dirname, commandsDir[1], files[i])));
+        for (obj in loadedModules[i]) {
+            commandList.push(loadedModules[i][obj]);
+        }
+    }
 })

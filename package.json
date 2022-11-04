@@ -25,6 +25,7 @@
     },
     "dependencies": {
         "brightness": "^3.0.0",
-        "find-process": "^1.4.7"
+        "find-process": "^1.4.7",
+        "require-all": "^3.0.0"
     }
 }

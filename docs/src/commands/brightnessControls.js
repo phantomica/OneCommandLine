@@ -1,11 +1,19 @@
 const brightness = require('brightness');
 
-/**
- * Sets monitor brightness to value
- * @param {number} value Number between 1 and 100
- */
-const setBrightness = (value) => {
-    brightness.set(value / 100);
+const setBrightness = {
+    func:
+    /**
+     * Sets monitor brightness to value
+     * @param {number} value Number between 1 and 100
+     */
+        (value) => {
+        brightness.set(value / 100);
+    },
+    funcNames: ['setBrightness', 'brightness', 'br'],
+    funcParam: true,
+    funcProperties: false,
 }
+
+
 
 module.exports = { setBrightness };
