@@ -32,6 +32,7 @@ const splitCommand = (command) => {
     let commandProperties = "";
     for (let i = 2; i < commandSplit.length; i++) {
         commandProperties += commandSplit[i];
+        commandProperties += ' ';
     }
 
     return {
@@ -52,7 +53,8 @@ const commandHandler = (input) => {
 
     for (i in commandList) {
         if (!commandList[i].funcNames.includes(command.name)) { continue }
-        if (commandList[i].funcProperties) { commandList[i].func(command.value, command.properties); return commandExecuted = true; }
+        if (commandList[i].funcProperties && commandList[i].funcParam) { commandList[i].func(command.value, command.properties); return commandExecuted = true; }
+        if (commandList[i].funcProperties) { commandList[i].func(command.value + command.properties); return commandExecuted = true; }
         if (commandList[i].funcParam) { commandList[i].func(command.value); return commandExecuted = true; }
         commandList[i].func();
         return commandExecuted = true;
