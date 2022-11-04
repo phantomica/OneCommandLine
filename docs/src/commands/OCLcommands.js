@@ -1,8 +1,10 @@
-const quit = () => {
-    ipc.send('quit');
-}
-const exit = () => {
-    ipc.send('quit');
+const quit = {
+    func: () => {
+        ipc.send('quit');
+    },
+    funcNames: ['quit', 'exit'],
+    funcParam: false,
+    funcProperties: false,
 }
 
-module.exports = { quit, exit };
+module.exports = { quit };
