@@ -5,7 +5,7 @@ const path = require('path');
  1 => directory path for require
 */
 const commandsDir = ['./docs/src/commands/', './src/commands/'];
-const loadedModules = [];
+const loadedModules = {};
 const commandList = [];
 
 /*
@@ -15,9 +15,9 @@ import all modules from commands folder
 */
 fs.readdir(commandsDir[0], (err, files) => {
     for (let i = 0; i < files.length; i++) {
-        loadedModules.push(require(path.join(__dirname, commandsDir[1], files[i])));
-        for (obj in loadedModules[i]) {
-            commandList.push(loadedModules[i][obj]);
+        loadedModules[files[i]] = require(path.join(__dirname, commandsDir[1], files[i]));
+        for (obj in loadedModules[files[i]]) {
+            commandList.push(loadedModules[files[i]][obj]);
         }
     }
 })
