@@ -16,8 +16,7 @@ const killProcess = {
         });
     },
     funcNames: ['killProcess', 'exitProcess', 'killPr', 'exitPr'],
-    funcParam: true,
-    funcProperties: false,
+    funcParam: 1
 }
 
 

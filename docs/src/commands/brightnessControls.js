@@ -10,8 +10,7 @@ const setBrightness = {
         brightness.set(value / 100);
     },
     funcNames: ['setBrightness', 'brightness', 'br'],
-    funcParam: true,
-    funcProperties: false,
+    funcParam: 1
 }
 
 

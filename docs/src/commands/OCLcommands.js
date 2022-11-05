@@ -3,8 +3,7 @@ const quit = {
         ipc.send('quit');
     },
     funcNames: ['quit', 'exit'],
-    funcParam: false,
-    funcProperties: false,
+    funcParam: 0
 }
 
 module.exports = { quit };
