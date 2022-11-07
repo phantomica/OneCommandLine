@@ -1,6 +1,6 @@
 {
     "name": "onecommandline",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "A simple command line.<br> \r Press one <code>customizable</code> button to open up a small one line window that supports simple commands:<br>\r - <code>br [value]</code> - set the brightness of your monitor\r - <code>settings</code> - opens up the settings menu",
     "main": "main.js",
     "directories": {
