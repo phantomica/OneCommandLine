@@ -5,6 +5,9 @@ A simple command line.<br>
 Press one `customizable` button (currently not customizable, set to `^`) to open up a small one line window<br>
 that supports simple commands:<br>
 - `br [value]` - set the brightness of your monitor
+- `vol | volume | setVolume [value]` - set the system out volume
+- `mute` - mutes the system out volume
+- `unmute` - unmutes the system out volume
 - `quit | exit` - terminate OneCommandLine
 - ...
 <br>
