@@ -11,7 +11,9 @@ const htmlFiles = {
     shortcutSelect: './docs/shortcutSelect.html'
 }
 
-let window = null;
+let mainWindow = null;
+let settingsWin = null;
+let shortcutSelectWin = null;
 let tray = null;
 
 const createWindow = () => {
@@ -20,7 +22,7 @@ const createWindow = () => {
     const dimensions = mainScreen.size;
 
     // create Window
-    window = new BrowserWindow({
+    mainWindow = new BrowserWindow({
         // dimensions
         width: dimensions.width,
         height: 60,
@@ -43,12 +45,12 @@ const createWindow = () => {
 
     // hide window on focus lose
     app.on('browser-window-blur', () => {
-        window.hide();
+        mainWindow.hide();
     })
 
     // hide window on enter press
     ipc.on('command-submit', () => {
-        window.hide();
+        mainWindow.hide();
     })
 
     // quit process when quit command is received
@@ -60,7 +62,7 @@ const createWindow = () => {
     ipc.on('open-settings', createSettingsWindow)
 
     // load html index file into the window
-    window.loadFile(path.join(__dirname, htmlFiles.index));
+    mainWindow.loadFile(path.join(__dirname, htmlFiles.index));
 
     // create windows system tray with 'Quit' option
     tray = new Tray('D:\\Programmierung\\Visual Studio\\C#\\Shadow\\shadow\\shadow\\shadow.ico');
@@ -75,12 +77,13 @@ const createWindow = () => {
 
     // reads existing shortcutKey || opens window to set shortcutKey
     readShortcutKey();
+
+    ipc.on('open-shortcut-select', shortcutSelectWindow);
 }
 
-app.on('ready', createWindow)
 
 const createSettingsWindow = () => {
-    let settingsWin = new BrowserWindow({
+    settingsWin = new BrowserWindow({
         // dimensions
         width: 400,
         height: 300,
@@ -114,7 +117,7 @@ const createSettingsWindow = () => {
  */
 const shortcutSelectWindow = () => {
     // window settings
-    let shortcutSelectWin = new BrowserWindow({
+    shortcutSelectWin = new BrowserWindow({
         // dimensions
         width: 400,
         height: 300,
@@ -155,9 +158,8 @@ const readShortcutKey = () => {
     if (settingsJson.shortcutKey === undefined || null) {
         shortcutSelectWindow();
     } else {
-        process.env.shortcutKey = settingsJson.shortcutKey;
-        globalShortcut.register(process.env.shortcutKey, () => {
-            window.show();
+        globalShortcut.register(settingsJson.shortcutKey, () => {
+            mainWindow.show();
         });
     }
 }
@@ -167,18 +169,26 @@ const readShortcutKey = () => {
  * @param {string} key key that exists on keyboard 
  */
 const setShortcutKey = (key) => {
+    const rawSettingsJson = fs.readFileSync(jsonFiles.settings);
+    let settingsJson = JSON.parse(rawSettingsJson);
     // unregister old shortcut
-    if (process.env.shortcut !== undefined || null) {
-        globalShortcut.unregister(process.env.shortcut);
+    if (settingsJson.shortcutKey !== undefined || null) {
+        globalShortcut.unregister(settingsJson.shortcutKey);
     }
     // register new shortcut
     globalShortcut.register(key, () => {
-        window.show();
+        mainWindow.show();
     });
     // set new shortcut key
-    process.env.shortcut = key;
-    const rawSettingsJson = fs.readFileSync(jsonFiles.settings);
-    let settingsJson = JSON.parse(rawSettingsJson);
     settingsJson.shortcutKey = key;
     fs.writeFileSync(jsonFiles.settings, JSON.stringify(settingsJson, null, 2));
+
+    if (settingsWin !== undefined || null) {
+        settingsWin.webContents.send('set-shortcutKey');
+    }
 }
+
+
+
+
+app.on('ready', createWindow)
