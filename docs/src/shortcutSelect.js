@@ -1,4 +1,6 @@
 const ipc = require('electron').ipcRenderer;
+
+// variables for shortcut setting
 const shortcutPlaceholder = document.getElementById('shortcutPlaceholder');
 let shortcutKey = "";
 let maxKeys = 3;
@@ -9,9 +11,7 @@ window.addEventListener('keydown', (event) => {
         return;
     }
     if (event.key === 'Backspace') {
-        shortcutKey = "";
-        shortcutPlaceholder.innerHTML = "Press key to set as Shortcut...";
-        maxKeys = 3;
+        resetShortcutPlaceholder("Press key to set as Shortcut...");
         return;
     }
     if (shortcutKey.toLowerCase().includes(event.key.toLowerCase())) { return; }
@@ -27,11 +27,13 @@ window.addEventListener('keydown', (event) => {
     }
 
 
-    //TODO: fix 'DEAD' letter problem
+    // TODO: fix 'DEAD' letter problem
+    // * Currently dead letters are not allowed
+    // ! dead letters can't be set as shortcut keys 
     switch (event.key.toUpperCase()) {
         case 'DEAD':
-            shortcutKey += '\\';
-            break;
+            resetShortcutPlaceholder("Invalid! Please use another key");
+            return;
         default:
             shortcutKey += event.key.toUpperCase();
             break;
@@ -39,3 +41,14 @@ window.addEventListener('keydown', (event) => {
     shortcutPlaceholder.innerText = shortcutKey;
     maxKeys--;
 })
+
+/**
+ * Resets shortcutKey and maxKeys.
+ * Prints message to shortcutPlaceholder.
+ * @param {string} message 
+ */
+const resetShortcutPlaceholder = (message) => {
+    shortcutKey = "";
+    shortcutPlaceholder.innerHTML = message;
+    maxKeys = 3;
+}

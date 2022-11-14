@@ -183,7 +183,7 @@ const setShortcutKey = (key) => {
     settingsJson.shortcutKey = key;
     fs.writeFileSync(jsonFiles.settings, JSON.stringify(settingsJson, null, 2));
 
-    if (settingsWin !== undefined || null) {
+    if (settingsWin !== null && settingsWin !== undefined) {
         settingsWin.webContents.send('set-shortcutKey');
     }
 }
