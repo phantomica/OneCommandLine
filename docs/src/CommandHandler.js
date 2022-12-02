@@ -46,8 +46,12 @@ const commandHandler = (input) => {
 
     for (i in commandList) {
         if (!commandList[i].funcNames.includes(command.name)) { continue }
-        if (commandList[i].funcParam > 0 && !undefined) { commandList[i].func.apply(undefined, command.values); return commandExecuted = true; }
-        commandList[i].func();
+
+        if (commandList[i].funcParam > 0 && !undefined) {
+            commandList[i].func.apply(undefined, command.values);
+        } else {
+            commandList[i].func();
+        }
         return commandExecuted = true;
     }
     return commandExecuted;

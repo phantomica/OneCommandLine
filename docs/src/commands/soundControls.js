@@ -7,6 +7,8 @@ const setVolume = {
      * @param {Number} value 1-100
      */
         (value) => {
+        if (isNaN(value)) { return console.error('Command: setVolume, Value must be a number'); }
+        if (0 > parseInt(value) || parseInt(value) > 100) { return console.error('Command: setVolume, Value must be between 1 and 100') }
         loudness.setVolume(parseInt(value));
     },
     funcNames: ['setVolume', 'volume', 'vol'],
