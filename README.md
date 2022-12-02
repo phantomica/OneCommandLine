@@ -4,12 +4,15 @@ Work In Progress<br>
 A simple command line.<br>
 Press one `customizable` button to open up a small one line window<br>
 that supports simple commands:<br>
+- `quit | exit` - terminate OneCommandLine
+- `settings` - open OneCommandLine's settings
 - `br [value]` - set the brightness of your monitor
 - `vol | volume | setVolume [value]` - set the system out volume
 - `mute` - mutes the system out volume
 - `unmute` - unmutes the system out volume
-- `quit | exit` - terminate OneCommandLine
-- `settings` - open OneCommandLine's settings
+- `shutdown` - shutdown computer
+- `restart` - restart computer
+- `sleepmode | sleep` - activate computer sleepmode
 - ...
 <br>
 Custom commands can also be added:<br>
