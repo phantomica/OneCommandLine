@@ -35,6 +35,7 @@ const checkDuplicateImport = (command, fileName) => {
 
 
 /**
+ * TODO: give popup window for non-imported modules
  * import all modules from commands folder
  * => modules are stored in loadedModules
  * => objects from loadedModules are stored in commandList
