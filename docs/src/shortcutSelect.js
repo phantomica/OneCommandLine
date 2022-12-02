@@ -34,6 +34,9 @@ window.addEventListener('keydown', (event) => {
         case 'DEAD':
             resetShortcutPlaceholder("Invalid! Please use another key");
             return;
+        case ' ':
+            shortcutKey += "SPACE";
+            break
         default:
             shortcutKey += event.key.toUpperCase();
             break;
