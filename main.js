@@ -82,15 +82,15 @@ const createWindow = () => {
     mainWindow.loadFile(path.join(__dirname, htmlFiles.index));
 
     // create windows system tray with 'Quit' option
-    tray = new Tray('D:\\Programmierung\\Visual Studio\\C#\\Shadow\\shadow\\shadow\\shadow.ico');
-    const contextMenu = Menu.buildFromTemplate([{
-        label: 'Quit',
-        click: () => {
-            app.quit();
-        }
-    }])
-    tray.setToolTip('OneCommandLine')
-    tray.setContextMenu(contextMenu)
+    // tray = new Tray('');
+    // const contextMenu = Menu.buildFromTemplate([{
+    //     label: 'Quit',
+    //     click: () => {
+    //         app.quit();
+    //     }
+    // }])
+    // tray.setToolTip('OneCommandLine')
+    // tray.setContextMenu(contextMenu)
 
     // reads existing shortcutKey || opens window to set shortcutKey
     readShortcutKey();
