@@ -1,7 +1,15 @@
+/***********/
+/* IMPORTS */
+/***********/
+
 const { app, BrowserWindow, Tray, Menu, screen, globalShortcut } = require('electron');
 const ipc = require('electron').ipcMain; // receiver
 const path = require('path');
 const fs = require('fs');
+
+/*************/
+/* FILEPATHS */
+/*************/
 const jsonFiles = {
     settings: './docs/settings.json'
 }
@@ -11,11 +19,20 @@ const htmlFiles = {
     shortcutSelect: './docs/shortcutSelect.html'
 }
 
+/***********/
+/* WINDOWS */
+/***********/
+
+// make window variables globally available
 let mainWindow = null;
 let settingsWin = null;
 let shortcutSelectWin = null;
 let tray = null;
 
+
+/**
+ * Main window
+ */
 const createWindow = () => {
     // get Screen Dimensions
     const mainScreen = screen.getPrimaryDisplay();
@@ -82,6 +99,9 @@ const createWindow = () => {
 }
 
 
+/**
+ * Settings Window
+ */
 const createSettingsWindow = () => {
     settingsWin = new BrowserWindow({
         // dimensions
@@ -145,6 +165,11 @@ const shortcutSelectWindow = () => {
     })
 
 }
+
+
+/*************/
+/* FUNCTIONS */
+/*************/
 
 /**
  * Gets and sets the opening shortcut key from settings.json
