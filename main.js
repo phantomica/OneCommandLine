@@ -6,10 +6,12 @@ const { app, BrowserWindow, Tray, Menu, screen, globalShortcut } = require('elec
 const ipc = require('electron').ipcMain; // receiver
 const path = require('path');
 const fs = require('fs');
+const sudo = require('sudo-prompt');
 
 /*************/
 /* FILEPATHS */
 /*************/
+
 const jsonFiles = {
     settings: './docs/settings.json'
 }
@@ -18,6 +20,35 @@ const htmlFiles = {
     settings: './docs/settings.html',
     shortcutSelect: './docs/shortcutSelect.html'
 }
+
+/**
+ * Changes file paths to the current working directory.
+ * If this throws an error it's running in test mode and returns true.
+ * @returns {boolean} true if in dev mode, false otherwise
+ */
+const isDevMode = () => {
+
+    try {
+        fs.readFileSync("./resources/app/docs/settings.json");
+
+        for (filePath in jsonFiles) {
+            jsonFiles[filePath] = jsonFiles[filePath].replace('./', './resources/app/');
+        }
+
+        for (filePath in htmlFiles) {
+            htmlFiles[filePath] = htmlFiles[filePath].replace('./', './resources/app/');
+        }
+
+        return false;
+
+    } catch (e) {
+        console.warn("Running in Test Mode\n" + e);
+        return true;
+    }
+
+}
+
+const devMode = isDevMode();
 
 /***********/
 /* WINDOWS */
@@ -60,6 +91,7 @@ const createWindow = () => {
         }
     });
 
+
     // hide window on focus lose
     app.on('browser-window-blur', () => {
         mainWindow.hide();
@@ -91,6 +123,9 @@ const createWindow = () => {
     // }])
     // tray.setToolTip('OneCommandLine')
     // tray.setContextMenu(contextMenu)
+
+    installPowerShellModules();
+    if (devMode) { installNodeModules(); }
 
     // reads existing shortcutKey || opens window to set shortcutKey
     readShortcutKey();
@@ -214,6 +249,54 @@ const setShortcutKey = (key) => {
 }
 
 
+/**
+ * This should only be used for dev versions,
+ * since .exe exports have all modules included.
+ */
+const installNodeModules = async() => {
+    const rawSettingsJson = fs.readFileSync(jsonFiles.settings);
+    let settingsJson = JSON.parse(rawSettingsJson);
 
+    if (settingsJson.installed === undefined) {
+        settingsJson.installed = {};
+        fs.writeFileSync(jsonFiles.settings, JSON.stringify(settingsJson, null, 2));
+        await installNodeModules();
+    }
+
+    if (settingsJson.installed.nodeModules == true) { return }
+
+    sudo.exec('npm install', { name: 'nodeInstall' }, (error) => {
+        error && console.log(error);
+
+        if (error !== undefined) { return }
+        settingsJson.installed.nodeModules = true;
+        fs.writeFileSync(jsonFiles.settings, JSON.stringify(settingsJson, null, 2));
+    });
+}
+
+/**
+ * Installs PS modules needed in different functions of OCL
+ * @returns 
+ */
+const installPowerShellModules = async() => {
+    const rawSettingsJson = fs.readFileSync(jsonFiles.settings);
+    let settingsJson = JSON.parse(rawSettingsJson);
+
+    if (settingsJson.installed === undefined) {
+        settingsJson.installed = {};
+        fs.writeFileSync(jsonFiles.settings, JSON.stringify(settingsJson, null, 2));
+        await installPowerShellModules();
+    }
+
+    if (settingsJson.installed.powershellModules == true) { return }
+
+    sudo.exec('Powershell Install-Module -Name AudioDeviceCmdlets -Force', { name: 'PSinstall1' }, (error) => {
+        error && console.log(error);
+
+        if (error !== undefined) { return }
+        settingsJson.installed.powershellModules = true;
+        fs.writeFileSync(jsonFiles.settings, JSON.stringify(settingsJson, null, 2));
+    });
+}
 
 app.on('ready', createWindow)
