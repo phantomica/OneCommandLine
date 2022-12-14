@@ -89,7 +89,6 @@ const setVolume = {
     funcParam: 1
 }
 
-// TODO: support microphone mute
 
 const muteVolume = {
     func:
@@ -105,7 +104,6 @@ const muteVolume = {
             case 'in':
             case 'mic':
             case 'microphone':
-                // TODO: Currently muteState is a Promise; get boolean
                 execSync(muteCommand);
                 await loudness.setMuted(muteState);
                 break;
@@ -127,8 +125,6 @@ const muteVolume = {
     funcParam: 1
 }
 
-// TODO: support microphone unmute
-
 const unmuteVolume = {
     func:
     /**
@@ -143,7 +139,6 @@ const unmuteVolume = {
             case 'in':
             case 'mic':
             case 'microphone':
-                // TODO: Currently muteState is a Promise; get boolean
                 execSync(unmuteCommand);
                 await loudness.setMuted(muteState);
                 break;
